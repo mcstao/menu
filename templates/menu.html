@@ -1,0 +1,33 @@
+{% load menu_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+</head>
+<body>
+    <nav>
+        {% draw_menu 'main_menu' %}
+        <ul>
+            {% for node in menu %}
+                <li class="{% if node.is_active %}active{% endif %}">
+                    <a href="{{ node.item.get_url }}">{{ node.item.name }}</a>
+                    {% if node.sub_items and node.is_expanded %}
+                        <ul>
+                            {% for sub_item in node.sub_items %}
+                                <li class="{% if sub_item.is_active %}active{% endif %}">
+                                    <a href="{{ sub_item.item.get_url }}">{{ sub_item.item.name }}</a>
+                                    {% if sub_item.sub_items and sub_item.is_expanded %}
+                                        {% include 'menu.html' with menu=sub_item.sub_items %}
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </nav>
+</body>
+</html>
