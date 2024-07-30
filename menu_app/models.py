@@ -8,6 +8,7 @@ class Menu(models.Model):
     def __str__(self):
         return self.name
 
+
 class MenuItem(models.Model):
     menu = models.ForeignKey(Menu, related_name='items', on_delete=models.CASCADE)
     main_item = models.ForeignKey('self', null=True, blank=True, related_name='sub_items', on_delete=models.CASCADE)
